@@ -1,5 +1,5 @@
+# posts/serializers.py
 from rest_framework import serializers
-from django.contrib.auth import authenticate
 from .models import Post
 from accounts.serializers import UserSerializer
 
@@ -12,11 +12,6 @@ class PostCreateSerializer(serializers.ModelSerializer):
         if len(value.strip()) == 0:
             raise serializers.ValidationError("Post content cannot be empty")
         return value
-    
-    def create(self, validated_data):
-        # Remove the line that automatically assigns the user
-        # The view will handle author assignment
-        return super().create(validated_data)
 
 class PostSerializer(serializers.ModelSerializer):
     author_name = serializers.ReadOnlyField()

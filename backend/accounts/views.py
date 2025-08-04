@@ -20,19 +20,26 @@ def register_view(request):
         }, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def login_view(request):
+    print(f"DEBUG: Login attempt for {request.data}")
     serializer = UserLoginSerializer(data=request.data)
     if serializer.is_valid():
         user = serializer.validated_data['user']
-        login(request, user)
+        print(f"DEBUG: Before login() - Session key: {request.session.session_key}")
+        login(request, user)  # This creates the session
+        print(f"DEBUG: After login() - Session key: {request.session.session_key}")
+        print(f"DEBUG: User authenticated: {request.user.is_authenticated}")
         user_data = UserSerializer(user).data
         return Response({
             'message': 'Login successful',
             'user': user_data
         }, status=status.HTTP_200_OK)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
