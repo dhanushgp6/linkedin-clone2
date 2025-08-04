@@ -1,15 +1,16 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:8000';
+const API_BASE_URL =
+  process.env.NODE_ENV === 'production'
+    ? 'https://linkedin-clone2-production.up.railway.app'   // ← your Railway URL
+    : 'http://127.0.0.1:8000';
 
-// Create axios instance with correct config for session auth
 const api = axios.create({
-    baseURL: API_BASE_URL,
-    withCredentials: true, // CRITICAL: sends session cookies
-    headers: { 
-        'Content-Type': 'application/json',
-    },
+  baseURL: API_BASE_URL,
+  withCredentials: true,
+  headers: { 'Content-Type': 'application/json' },
 });
+
 // api.js  – add after the axios.create block
 function getCookie (name) {
   const value = document.cookie.match(`(^|;)\\s*${name}=([^;]*)`);
