@@ -142,13 +142,12 @@ if 'RENDER' in os.environ:
     DEBUG = False
     ALLOWED_HOSTS = ['.onrender.com']
     
-    # Database
+    # Database configuration
     DATABASES = {
         'default': dj_database_url.parse(os.environ.get('DATABASE_URL'))
     }
     
-    # Static files
-    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-    
-    # Add whitenoise middleware
+    # Static files with WhiteNoise
     MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
