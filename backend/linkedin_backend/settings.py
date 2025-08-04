@@ -138,16 +138,26 @@ CSRF_TRUSTED_ORIGINS = [
     "http://localhost:8000",
 ]
 # Production settings
-if 'RENDER' in os.environ:
+# Railway Production Settings
+if 'RAILWAY_ENVIRONMENT' in os.environ:
     DEBUG = False
-    ALLOWED_HOSTS = ['.onrender.com']
+    ALLOWED_HOSTS = ['.railway.app']
     
     # Database configuration
     DATABASES = {
         'default': dj_database_url.parse(os.environ.get('DATABASE_URL'))
     }
     
-    # Static files with WhiteNoise
+    # Static files configuration
     MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
     STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+    
+    # CORS for production
+    CORS_ALLOWED_ORIGINS = [
+        "https://your-frontend-domain.vercel.app",  # We'll update this later
+    ]
+    
+    CSRF_TRUSTED_ORIGINS = [
+        "https://your-frontend-domain.vercel.app",
+    ]
