@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from django.contrib.auth import authenticate
 from .models import Post
 from accounts.serializers import UserSerializer
 
@@ -13,7 +14,8 @@ class PostCreateSerializer(serializers.ModelSerializer):
         return value
     
     def create(self, validated_data):
-        validated_data['author'] = self.context['request'].user
+        # Remove the line that automatically assigns the user
+        # The view will handle author assignment
         return super().create(validated_data)
 
 class PostSerializer(serializers.ModelSerializer):
