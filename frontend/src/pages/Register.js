@@ -13,6 +13,8 @@ const Register = () => {
     bio: ''
   });
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(''); // ← Add error state
+  const [success, setSuccess] = useState(''); // ← Add success state
   const { register, isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
@@ -24,6 +26,7 @@ const Register = () => {
   }, [isAuthenticated, navigate]);
 
   const handleChange = (e) => {
+    setError(''); // Clear error when user types
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
@@ -34,17 +37,33 @@ const Register = () => {
     e.preventDefault();
     
     if (formData.password !== formData.password_confirm) {
-      alert('Passwords do not match!');
+      setError('Passwords do not match!');
       return;
     }
     
     setLoading(true);
+    setError('');
+    setSuccess('');
+    
     const result = await register(formData);
     
     if (result.success) {
-      navigate('/');
+      setSuccess('Registration successful! Redirecting...');
+      setTimeout(() => navigate('/'), 1500);
     } else {
-      alert('Registration failed: ' + JSON.stringify(result.error));
+      // Better error handling
+      let errorMsg = 'Registration failed. ';
+      if (typeof result.error === 'object') {
+        // Handle field-specific errors
+        const errors = result.error;
+        if (errors.email) errorMsg += 'Email: ' + errors.email.join(', ') + ' ';
+        if (errors.username) errorMsg += 'Username: ' + errors.username.join(', ') + ' ';
+        if (errors.password) errorMsg += 'Password: ' + errors.password.join(', ') + ' ';
+        if (errors.non_field_errors) errorMsg += errors.non_field_errors.join(', ');
+      } else {
+        errorMsg += result.error;
+      }
+      setError(errorMsg);
     }
     setLoading(false);
   };
@@ -58,6 +77,17 @@ const Register = () => {
               <h3 className="text-center">Register</h3>
             </div>
             <div className="card-body">
+              {/* ← Add error and success alerts */}
+              {error && (
+                <div className="alert alert-danger" role="alert">
+                  {error}
+                </div>
+              )}
+              {success && (
+                <div className="alert alert-success" role="alert">
+                  {success}
+                </div>
+              )}
               <form onSubmit={handleSubmit}>
                 <div className="row">
                   <div className="col-md-6 mb-3">

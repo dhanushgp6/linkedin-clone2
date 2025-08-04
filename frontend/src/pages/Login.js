@@ -8,6 +8,7 @@ const Login = () => {
     password: ''
   });
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(''); // ← Add error state
   const { login, isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
@@ -19,6 +20,7 @@ const Login = () => {
   }, [isAuthenticated, navigate]);
 
   const handleChange = (e) => {
+    setError(''); // Clear error when user types
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
@@ -28,11 +30,14 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    setError(''); // Clear previous errors
     
     const result = await login(formData);
     
     if (result.success) {
       navigate('/');
+    } else {
+      setError(result.error || 'Login failed. Please check your credentials.'); // ← Show error
     }
     setLoading(false);
   };
@@ -46,6 +51,12 @@ const Login = () => {
               <h3 className="text-center">Login</h3>
             </div>
             <div className="card-body">
+              {/* ← Add error alert */}
+              {error && (
+                <div className="alert alert-danger" role="alert">
+                  {error}
+                </div>
+              )}
               <form onSubmit={handleSubmit}>
                 <div className="mb-3">
                   <label htmlFor="email" className="form-label">Email</label>
