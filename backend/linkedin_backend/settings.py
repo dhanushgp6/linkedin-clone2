@@ -120,8 +120,8 @@ REST_FRAMEWORK = {
 
 # CORS settings
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
-    "http://127.0.0.1:3000",
+    "https://linkedin-clone2-seven.vercel.app",  # ← Your actual Vercel URL
+    "http://localhost:3000",  # Keep for local development
 ]
 CORS_ALLOW_CREDENTIALS = True
 
@@ -134,8 +134,8 @@ SESSION_SAVE_EVERY_REQUEST = True
 
 # CSRF settings
 CSRF_TRUSTED_ORIGINS = [
+    "https://linkedin-clone2-seven.vercel.app",  # ← Your actual Vercel URL
     "http://localhost:3000",
-    "http://localhost:8000",
 ]
 # Production settings
 # Railway Production Settings
