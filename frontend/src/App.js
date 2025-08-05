@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from './components/Auth/ProtectedRoute';
 
@@ -15,12 +15,24 @@ import Header from './components/Layout/Header';
 
 import './App.css';
 
+// Custom component to conditionally render Header
+const ConditionalHeader = () => {
+  const location = useLocation();
+  // Hide header on login and register pages
+  if (location.pathname === '/login' || location.pathname === '/register') {
+    return null;
+  }
+  return <Header />;
+};
+
 function App() {
   return (
     <AuthProvider>
       <Router>
         <div className="App">
-          <Header />
+          {/* Render header only on non-auth pages */}
+          <ConditionalHeader />
+
           <main className="container-fluid">
             <Routes>
               <Route path="/login" element={<Login />} />
