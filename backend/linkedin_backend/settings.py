@@ -120,21 +120,25 @@ REST_FRAMEWORK = {
 
 # CORS settings
 CORS_ALLOWED_ORIGINS = [
-    "https://linkedin-clone2-seven.vercel.app",  # ← Your actual Vercel URL
-    "http://localhost:3000",  # Keep for local development
+    "https://linkedin-clone2-seven.vercel.app",
+    "https://linkedin-clone2-production.up.railway.app",  # Add your Railway domain too
+    "http://localhost:3000",
 ]
 CORS_ALLOW_CREDENTIALS = True
 
 # Session settings
 SESSION_COOKIE_AGE = 86400
-SESSION_COOKIE_SECURE = False  # False for development
+#SESSION_COOKIE_SECURE = False  # False for development
 SESSION_COOKIE_HTTPONLY = True
 SESSION_COOKIE_SAMESITE = 'Lax'
 SESSION_SAVE_EVERY_REQUEST = True
-
+CSRF_COOKIE_SAMESITE = 'Lax'
+SESSION_COOKIE_SECURE = True  # For HTTPS production
+CSRF_COOKIE_SECURE = True 
 # CSRF settings
 CSRF_TRUSTED_ORIGINS = [
-    "https://linkedin-clone2-seven.vercel.app",  # ← Your actual Vercel URL
+    "https://linkedin-clone2-seven.vercel.app", 
+    "https://linkedin-clone2-production.up.railway.app",  # Add your Railway domain too
     "http://localhost:3000",
 ]
 # Production settings
