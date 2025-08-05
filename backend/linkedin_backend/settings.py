@@ -124,8 +124,8 @@ CSRF_TRUSTED_ORIGINS = [
     "http://localhost:3000",
 ]
 
-SESSION_COOKIE_SAMESITE = "Lax"
-CSRF_COOKIE_SAMESITE = "Lax"
+#SESSION_COOKIE_SAMESITE = "Lax"
+#CSRF_COOKIE_SAMESITE = "Lax"
 SESSION_COOKIE_SECURE = True    # True for HTTPS!
 CSRF_COOKIE_SECURE = True
 
@@ -148,15 +148,25 @@ if 'RAILWAY_ENVIRONMENT' in os.environ:
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
     # Use SAME ORIGINS as above in CORS/CSRF
-    CORS_ALLOWED_ORIGINS = [
-        "https://linkedin-clone2-seven.vercel.app",
-        "https://linkedin-clone2-production.up.railway.app",
-    ]
-    CSRF_TRUSTED_ORIGINS = [
-        "https://linkedin-clone2-seven.vercel.app",
-        "https://linkedin-clone2-production.up.railway.app",
-    ]
-    SESSION_COOKIE_SECURE = True
-    CSRF_COOKIE_SECURE = True
-    CSRF_COOKIE_HTTPONLY = False
 
+    #SESSION_COOKIE_SECURE = True
+    #CSRF_COOKIE_SECURE = True
+    CSRF_COOKIE_HTTPONLY = False
+    CORS_ALLOWED_ORIGINS = [
+    "https://linkedin-clone2-seven.vercel.app",
+    "https://linkedin-clone2-production.up.railway.app",
+    "http://localhost:3000",
+]
+
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://linkedin-clone2-seven.vercel.app",
+    "https://linkedin-clone2-production.up.railway.app",
+]
+SESSION_COOKIE_SAMESITE = "None"
+CSRF_COOKIE_SAMESITE    = "None"
+SESSION_COOKIE_SECURE   = True     # required when SameSite=None
+CSRF_COOKIE_SECURE      = True
+SESSION_COOKIE_HTTPONLY = True
+SESSION_COOKIE_AGE      = 86400
+SESSION_SAVE_EVERY_REQUEST = True
