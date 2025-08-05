@@ -33,40 +33,42 @@ const Register = () => {
     });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  
+  if (formData.password !== formData.password_confirm) {
+    setError('Passwords do not match!');
+    return;
+  }
+  
+  setLoading(true);
+  setError('');
+  setSuccess('');
+  
+  const result = await register(formData);
+  
+  if (result.success) {
+    setSuccess('Registration successful! Redirecting...');
+    setTimeout(() => navigate('/'), 1500);
+  } else {
+    // ADD THIS LINE FOR DEBUGGING
+    console.log('Registration error details:', result.error); // ← ADD THIS
     
-    if (formData.password !== formData.password_confirm) {
-      setError('Passwords do not match!');
-      return;
-    }
-    
-    setLoading(true);
-    setError('');
-    setSuccess('');
-    
-    const result = await register(formData);
-    
-    if (result.success) {
-      setSuccess('Registration successful! Redirecting...');
-      setTimeout(() => navigate('/'), 1500);
+    let errorMsg = 'Registration failed. ';
+    if (typeof result.error === 'object') {
+      const errors = result.error;
+      if (errors.email) errorMsg += 'Email: ' + errors.email.join(', ') + ' ';
+      if (errors.username) errorMsg += 'Username: ' + errors.username.join(', ') + ' ';
+      if (errors.password) errorMsg += 'Password: ' + errors.password.join(', ') + ' ';
+      if (errors.non_field_errors) errorMsg += errors.non_field_errors.join(', ');
     } else {
-      // Better error handling
-      let errorMsg = 'Registration failed. ';
-      if (typeof result.error === 'object') {
-        // Handle field-specific errors
-        const errors = result.error;
-        if (errors.email) errorMsg += 'Email: ' + errors.email.join(', ') + ' ';
-        if (errors.username) errorMsg += 'Username: ' + errors.username.join(', ') + ' ';
-        if (errors.password) errorMsg += 'Password: ' + errors.password.join(', ') + ' ';
-        if (errors.non_field_errors) errorMsg += errors.non_field_errors.join(', ');
-      } else {
-        errorMsg += result.error;
-      }
-      setError(errorMsg);
+      errorMsg += result.error;
     }
-    setLoading(false);
-  };
+    setError(errorMsg);
+  }
+  setLoading(false);
+};
+
 
   return (
     <div className="container mt-5">
