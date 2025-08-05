@@ -5,7 +5,8 @@ from rest_framework.response import Response
 from django.contrib.auth import login, logout
 from .serializers import UserRegistrationSerializer, UserLoginSerializer, UserSerializer
 from .models import User
-
+from django.views.decorators.csrf import ensure_csrf_cookie
+from django.utils.decorators import method_decorator
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def register_view(request):
@@ -23,15 +24,13 @@ def register_view(request):
 
 @api_view(['POST'])
 @permission_classes([AllowAny])
+@ensure_csrf_cookie  # ← Add this
 def login_view(request):
     print(f"DEBUG: Login attempt for {request.data}")
     serializer = UserLoginSerializer(data=request.data)
     if serializer.is_valid():
         user = serializer.validated_data['user']
-        print(f"DEBUG: Before login() - Session key: {request.session.session_key}")
-        login(request, user)  # This creates the session
-        print(f"DEBUG: After login() - Session key: {request.session.session_key}")
-        print(f"DEBUG: User authenticated: {request.user.is_authenticated}")
+        login(request, user)
         user_data = UserSerializer(user).data
         return Response({
             'message': 'Login successful',

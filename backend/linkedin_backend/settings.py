@@ -158,4 +158,5 @@ if 'RAILWAY_ENVIRONMENT' in os.environ:
     ]
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
+    CSRF_COOKIE_HTTPONLY = False
 
