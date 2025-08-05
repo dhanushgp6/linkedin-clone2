@@ -7,7 +7,7 @@ from pathlib import Path
 from decouple import config
 import dj_database_url
 from corsheaders.defaults import default_headers
-
+from linkedin_backend.csrf_exempt import CsrfExemptSessionAuthentication
 # ────────────────────────────────────────────────────────────
 # BASE CONFIG
 # ────────────────────────────────────────────────────────────
@@ -112,7 +112,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 # ────────────────────────────────────────────────────────────
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
-        "rest_framework.authentication.SessionAuthentication",
+        # Use our exempt version instead of the standard one
+        "linkedin_backend.csrf_exempt.CsrfExemptSessionAuthentication",
     ],
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.IsAuthenticatedOrReadOnly",
