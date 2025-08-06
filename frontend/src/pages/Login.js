@@ -35,8 +35,8 @@ const Login = () => {
 
   return (
     <>
-      {/* Animated Background */}
-      <div className="animated-bg"></div>
+      {/* Professional animated gradient background */}
+      <div style={styles.gradientBackground}></div>
       
       <div style={styles.pageContainer}>
         <div style={styles.loginCard}>
@@ -109,6 +109,12 @@ const Login = () => {
                 'Sign in'
               )}
             </button>
+            
+            <div className="text-center mt-3" style={{ borderTop: '1px solid #f0f0f0', paddingTop: '16px' }}>
+              <small style={{ color: '#888888', fontSize: '12px', fontWeight: '500' }}>
+                Crafted by Dhanush G P
+              </small>
+            </div>
           </form>
 
           <div className="text-center mt-4">
@@ -122,29 +128,27 @@ const Login = () => {
         </div>
       </div>
 
-     <style>{`
+      <style>{`
   /* Remove body margins and set full height */
   body, html, #root {
     height: 100vh;
     margin: 0;
     padding: 0;
     overflow-x: hidden;
+    background: transparent !important; /* ← Add this line */
   }
 
-  /* Animated gradient background - FASTER 10s cycle */
-  .animated-bg {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(-45deg, #6a11cb, #2575fc, #764ba2, #667eea);
-    background-size: 400% 400%;
-    animation: gradientAnimation 10s ease infinite;
-    z-index: -1;
+  /* Ensure App container is also transparent */
+  .App {
+    background: transparent !important; /* ← Add this line */
   }
 
-  @keyframes gradientAnimation {
+  /* Remove any Bootstrap container backgrounds */
+  .container-fluid {
+    background: transparent !important; /* ← Add this line */
+  }
+
+  @keyframes gradientShift {
     0% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
@@ -166,43 +170,56 @@ const Login = () => {
 };
 
 const styles = {
+  gradientBackground: {
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    background: 'linear-gradient(-45deg, #0a66c2, #378fe9, #6a11cb, #2575fc, #764ba2, #667eea)',
+    backgroundSize: '400% 400%',
+    animation: 'gradientShift 15s ease infinite',
+    zIndex: -1
+  },
   pageContainer: {
     minHeight: '100vh',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    padding: '0',
+    padding: '20px',
     margin: '0',
     fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
   },
   loginCard: {
     background: 'rgba(255, 255, 255, 0.95)',
-    borderRadius: '12px',
+    borderRadius: '16px',
     padding: '40px',
-    boxShadow: '0 10px 40px rgba(0, 0, 0, 0.15)',
+    boxShadow: '0 20px 60px rgba(0, 0, 0, 0.2)',
     width: '100%',
-    maxWidth: '400px',
-    backdropFilter: 'blur(10px)',
-    margin: '20px'
+    maxWidth: '420px',
+    backdropFilter: 'blur(15px)',
+    border: '1px solid rgba(255, 255, 255, 0.2)'
   },
   input: {
     border: '2px solid #e1e5e9',
     borderRadius: '8px',
     padding: '12px 16px',
     fontSize: '16px',
-    transition: 'border-color 0.2s',
-    outline: 'none'
+    transition: 'all 0.2s ease',
+    outline: 'none',
+    backgroundColor: 'rgba(255, 255, 255, 0.9)'
   },
   loginButton: {
-    backgroundColor: '#0073b1',
+    background: 'linear-gradient(135deg, #0a66c2, #378fe9)',
     border: 'none',
     borderRadius: '24px',
     padding: '12px 24px',
     fontSize: '16px',
     fontWeight: '600',
     color: 'white',
-    transition: 'background-color 0.2s',
-    height: '48px'
+    transition: 'all 0.2s ease',
+    height: '48px',
+    boxShadow: '0 4px 15px rgba(10, 102, 194, 0.3)'
   }
 };
 

@@ -1,38 +1,228 @@
 .App {
+  text-align: left;
+  background-color: #f3f2ef;
+  min-height: 100vh;
+}
+
+/* LinkedIn-inspired color variables */
+:root {
+  --linkedin-blue: #0a66c2;
+  --linkedin-blue-hover: #084d93;
+  --linkedin-dark-blue: #004182;
+  --linkedin-light-blue: #378fe9;
+  --linkedin-gray-light: #f3f2ef;
+  --linkedin-gray-medium: #666666;
+  --linkedin-gray-dark: #1d1d1d;
+  --linkedin-white: #ffffff;
+  --linkedin-border: #e0e0e0;
+  --shadow-light: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --shadow-medium: 0 2px 8px rgba(0, 0, 0, 0.12);
+  --shadow-strong: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+
+
+/* Professional card styling */
+.professional-card {
+  background: var(--linkedin-white);
+  border: 1px solid var(--linkedin-border);
+  border-radius: 8px;
+  box-shadow: var(--shadow-light);
+  transition: box-shadow 0.2s ease;
+}
+
+.professional-card:hover {
+  box-shadow: var(--shadow-medium);
+}
+
+/* Custom button styles */
+.btn-linkedin {
+  background-color: var(--linkedin-blue);
+  border-color: var(--linkedin-blue);
+  color: var(--linkedin-white);
+  font-weight: 600;
+  border-radius: 20px;
+  padding: 8px 20px;
+  transition: all 0.2s ease;
+}
+
+.btn-linkedin:hover {
+  background-color: var(--linkedin-blue-hover);
+  border-color: var(--linkedin-blue-hover);
+  color: var(--linkedin-white);
+  transform: translateY(-1px);
+}
+
+.btn-linkedin:disabled {
+  background-color: #ccc;
+  border-color: #ccc;
+  transform: none;
+}
+
+/* Loading spinner */
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 60vh;
+  background-color: var(--linkedin-gray-light);
+}
+
+.professional-spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid var(--linkedin-border);
+  border-top: 4px solid var(--linkedin-blue);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Responsive improvements */
+@media (max-width: 768px) {
+  .container {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  
+  .professional-card {
+    margin-bottom: 16px;
+  }
+}
+
+/* Remove default Bootstrap margins on main content */
+main.container-fluid {
+  padding: 0;
+  background-color: var(--linkedin-gray-light);
+  min-height: calc(100vh - 56px);
+}
+/* ---------- NAVBAR ---------- */
+/* ---------- IMPROVED NAVBAR ---------- */
+.linkedin-navbar {
+  background-color: #ffffff;
+  height: 56px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.linkedin-navbar .container-fluid {
+  padding: 0 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.linkedin-navbar .navbar-brand {
+  color: #1d1d1d;
+  transition: opacity 0.2s ease;
+  text-decoration: none;
+}
+
+.linkedin-navbar .navbar-brand:hover {
+  opacity: 0.8;
+  color: #1d1d1d;
+}
+
+.nav-link-custom {
+  color: #666666 !important;
+  font-weight: 500;
+  font-size: 12px;
+  padding: 8px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.nav-link-custom:hover,
+.nav-link-custom:focus {
+  color: #0a66c2 !important;
+  background-color: rgba(10, 102, 194, 0.08);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.avatar-circle {
+  background-color: #0a66c2;
+  color: #ffffff;
+  border-radius: 50%;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  font-weight: 600;
+  box-shadow: 0 2px 6px rgba(10, 102, 194, 0.25);
+}
+
+/* Enhanced button styling */
+.btn-linkedin {
+  background: linear-gradient(135deg, #0a66c2 0%, #378fe9 100%);
+  border: none;
   color: white;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 6px rgba(10, 102, 194, 0.25);
 }
 
-.App-link {
-  color: #61dafb;
+.btn-linkedin:hover {
+  background: linear-gradient(135deg, #084d93 0%, #2668d4 100%);
+  color: white;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(10, 102, 194, 0.35);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .linkedin-navbar .container-fluid {
+    padding: 0 16px;
   }
-  to {
-    transform: rotate(360deg);
+  
+  .nav-link-custom {
+    font-size: 11px;
+    padding: 6px;
+  }
+  
+  .btn-linkedin {
+    font-size: 12px;
+    padding: 4px 12px;
+  }
+}
+
+
+/* Remove default underline when nav-link is active */
+.nav-link-custom.active {
+  color: #0a66c2;
+}
+/* ───────── AUTH-PAGE GRADIENT (only appears on /login & /register) ───────── */
+.auth-gradient-bg {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(-45deg,
+    #0a66c2 0%,     /* LinkedIn blue */
+    #378fe9 33%,
+    #6a11cb 66%,    /* professional violet tint */
+    #2575fc 100%);
+  background-size: 400% 400%;
+  animation: authGradient 12s ease-in-out infinite;
+  z-index: -1;     /* sits behind the card */
+}
+
+/* Slow, elegant colour shift */
+@keyframes authGradient {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+/* Animation keyframe for gradient background */
+@keyframes gradientShift {
+  0% { 
+    background-position: 0% 50%; 
+  }
+  50% { 
+    background-position: 100% 50%; 
+  }
+  100% { 
+    background-position: 0% 50%; 
   }
 }
